@@ -19,3 +19,14 @@ Options:
   -s, --setup        Usar script setup
   -h, --help         display help for command
 ```
+
+## Usage
+
+```bash
+v-create MyComponent
+
+? Component name: MyComponent
+? Select language: ts
+? Use script setup? Yes
+✅ Componente MyComponent.vue criado com sucesso em: src/components/
+```
