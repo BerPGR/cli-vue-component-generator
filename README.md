@@ -4,7 +4,7 @@
 
 - Run `npm install -g vue-gen-component`
 
-- In your main VueJS project, run `v-create <name> [options]`
+- In your main VueJS project folder, run `v-create <name> [options]`
 
 ```
 OPTIONS:
