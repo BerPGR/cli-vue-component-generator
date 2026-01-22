@@ -1,0 +1,19 @@
+{
+  "name": "vue-gen-component",
+  "version": "1.0.0",
+  "description": "Comando CLI para criar componentes VueJS",
+  "bin": {
+    "v-create": "./create-vue-component.js"
+  },
+  "keywords": [
+    "vue",
+    "cli",
+    "generator"
+  ],
+  "author": "Bernardo de Melo Matuchewski",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^14.0.2",
+    "inquirer": "^8.2.7"
+  }
+}
