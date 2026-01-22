@@ -51,7 +51,7 @@ program
             questions.push({
                 type: 'input',
                 'name': 'name',
-                message: 'Component name',
+                message: 'Component name:',
                 validate: (value) => value ? true : 'O nome não pode ser vazio.'
             })
         }
@@ -60,7 +60,7 @@ program
             questions.push({
                 type: 'list',
                 name: 'lang',
-                message: 'Select language',
+                message: 'Select language:',
                 choices: ['js', 'ts'],
             })
         }
