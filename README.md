@@ -28,5 +28,5 @@ v-create MyComponent
 ? Component name: MyComponent
 ? Select language: ts
 ? Use script setup? Yes
-✅ Componente MyComponent.vue criado com sucesso em: src/components/
+✅ Component MyComponent.vue created successfully in: src/components/
 ```
