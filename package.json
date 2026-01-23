@@ -1,6 +1,6 @@
 {
   "name": "vue-gen-component",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Comando CLI para criar componentes VueJS",
   "bin": {
     "v-create": "./create-vue-component.js"

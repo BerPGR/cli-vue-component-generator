@@ -9,7 +9,7 @@ const createComponent = (name, lang, setup) => {
     const targetDir = path.join(process.cwd(), 'src', 'components')
 
     if (!fs.existsSync(targetDir)) {
-        console.log('📂 Pasta src/components não encontrada. Criando...');
+        console.log('📂 Folder src/components not found. Creating...');
         fs.mkdirSync(targetDir, { recursive: true });
     }
 
@@ -18,7 +18,7 @@ const createComponent = (name, lang, setup) => {
 
     const content = `<template>
     <div>
-        <h1>Componente ${name}</h1>
+        <h1>Component ${name}</h1>
     </div>
 </template>
 
@@ -27,17 +27,17 @@ const createComponent = (name, lang, setup) => {
     try {
         const filePath = path.join(targetDir, `${name}.vue`)
         fs.writeFileSync(filePath, content)
-        console.log(`✅ Componente ${name}.vue criado com sucesso em: src/components/`);
+        console.log(`✅ Component ${name}.vue created successfully in: src/components/`);
     } catch (error) {
-        console.error('❌ Erro ao criar o componente:', error);
+        console.error('❌ Error creating component:', error);
     }
 }
 
 program
     .version('1.0.0')
-    .argument('[name]', 'Nome do componente')
-    .option('-l, --lang <type>', 'Linguagem do componente (js ou ts)')
-    .option('-s, --setup', 'Usar script setup')
+    .argument('[name]', 'Component name')
+    .option('-l, --lang <type>', 'Component language (js or ts)')
+    .option('-s, --setup', 'Use script setup')
     .action(async (name, options) => {
         let answers = {
             name: name,
@@ -52,7 +52,7 @@ program
                 type: 'input',
                 'name': 'name',
                 message: 'Component name:',
-                validate: (value) => value ? true : 'O nome não pode ser vazio.'
+                validate: (value) => value ? true : 'The name cannot be empty.'
             })
         }
 
