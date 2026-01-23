@@ -15,8 +15,9 @@ Arguments:
 
 Options:
   -V, --version      output the version number
-  -l, --lang <type>  Linguagem do componente (js ou ts)
-  -s, --setup        Usar script setup
+  -l, --lang <type>  Component language (js or ts)
+  -s, --setup        Use script setup
+  -p, --path         Path to create the component (src/components)
   -h, --help         display help for command
 ```
 
@@ -26,6 +27,7 @@ Options:
 v-create MyComponent
 
 ? Component name: MyComponent
+? Path to create the component: src/components
 ? Select language: ts
 ? Use script setup? Yes
 ✅ Component MyComponent.vue created successfully in: src/components/

@@ -1,15 +1,21 @@
 #!/usr/bin/env node
 
-const fs = require('fs')
-const path = require('path')
-const { program } = require('commander')
-const inquirer = require('inquirer')
+import fs from 'fs'
+import path from 'path'
+import { program } from 'commander'
+import inquirer from 'inquirer'
+import chalk from 'chalk'
 
-const createComponent = (name, lang, setup) => {
-    const targetDir = path.join(process.cwd(), 'src', 'components')
+const createComponent = (name, lang, setup, userPath) => {
+    const targetDir = path.join(process.cwd(), userPath)
+
+    if (fs.existsSync(path.join(targetDir, `${name}.vue`))) {
+        console.log(chalk.red('❌ Component already exists at: ' + chalk.white.bold(userPath)));
+        return;
+    }
 
     if (!fs.existsSync(targetDir)) {
-        console.log('📂 Folder src/components not found. Creating...');
+        console.log(chalk.yellow('📂 Folder src/components not found. Creating...'));
         fs.mkdirSync(targetDir, { recursive: true });
     }
 
@@ -27,9 +33,9 @@ const createComponent = (name, lang, setup) => {
     try {
         const filePath = path.join(targetDir, `${name}.vue`)
         fs.writeFileSync(filePath, content)
-        console.log(`✅ Component ${name}.vue created successfully in: src/components/`);
+        console.log(`✅ Component ${name}.vue created successfully in: ${userPath}`);
     } catch (error) {
-        console.error('❌ Error creating component:', error);
+        console.error(chalk.red('❌ Error creating component:' + chalk.white.bold(error)));
     }
 }
 
@@ -38,11 +44,13 @@ program
     .argument('[name]', 'Component name')
     .option('-l, --lang <type>', 'Component language (js or ts)')
     .option('-s, --setup', 'Use script setup')
+    .option('-p, --path <path>', 'Path to create the component')
     .action(async (name, options) => {
         let answers = {
             name: name,
             lang: options.lang,
-            setup: options.setup
+            setup: options.setup,
+            userPath: options.path
         }
 
         const questions = []
@@ -50,9 +58,18 @@ program
         if (!name) {
             questions.push({
                 type: 'input',
-                'name': 'name',
+                name: 'name',
                 message: 'Component name:',
                 validate: (value) => value ? true : 'The name cannot be empty.'
+            })
+        }
+
+        if (!options.path) {
+            questions.push({
+                type: 'input',
+                name: 'userPath',
+                message: 'Path to create the component:',
+                default: 'src/components'
             })
         }
 
@@ -79,7 +96,7 @@ program
             answers = { ...answers, ...promptAnswers };
         }
 
-        createComponent(answers.name, answers.lang, answers.setup)
+        createComponent(answers.name, answers.lang, answers.setup, answers.userPath)
     })
 
 program.parse(process.argv)
