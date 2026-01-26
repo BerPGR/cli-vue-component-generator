@@ -1,5 +1,7 @@
 # Vue Component Generator
 
+## Version 1.1.2
+
 ## Installation
 
 - Run `npm install -g vue-gen-component`
@@ -8,17 +10,19 @@
 
 ```
 OPTIONS:
-Usage: create-vue-component [options] [name]
+Usage: v-create [options] [name]
 
 Arguments:
-  name               Nome do componente
+  name                Component name
 
 Options:
-  -V, --version      output the version number
-  -l, --lang <type>  Component language (js or ts)
-  -s, --setup        Use script setup
-  -p, --path         Path to create the component (src/components)
-  -h, --help         display help for command
+  -V, --version       output the version number
+  --js, --javascript  Use javascript in the component
+  --ts, --typescript  Use typescript in the component
+  -s, --setup         Use script setup
+  -p, --path <path>   Path to create the component
+  -h, --help          display help for command
+
 ```
 
 ## Usage
@@ -30,5 +34,6 @@ v-create MyComponent
 ? Path to create the component: src/components
 ? Select language: ts
 ? Use script setup? Yes
+Detected: daisyui
 ✅ Component MyComponent.vue created successfully in: src/components/
 ```

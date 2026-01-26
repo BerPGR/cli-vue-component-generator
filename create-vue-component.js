@@ -56,7 +56,7 @@ const detectUIFramework = () => {
   if (allDeps["@nuxt/ui"]) return "nuxtui";
   if (allDeps["primevue"]) return "primevue";
   if (allDeps["vuetify"]) return "vuetify";
-  if (allDeps["daisyui"]) return "daisyui";
+  if (allDeps['daisyui'] || allDeps['tailwindcss']) return 'tailwind'
   return 'default'
 };
 
@@ -66,9 +66,9 @@ const getTemplate = (ui, name) => {
   <UContainer>
     <UCard>
       <template #header>
-        <h1 class="text-xl font-bold">Componente ${name}</h1>
+        <h1 class="text-xl font-bold">Component ${name}</h1>
       </template>
-      <p>Conteúdo do NuxtUI</p>
+      <p>NuxtUI Content</p>
       <UButton label="Clique aqui" />
     </UCard>
   </UContainer>
@@ -77,7 +77,7 @@ const getTemplate = (ui, name) => {
     primevue: `<template>
   <div class="card">
     <Panel header="${name}">
-      <p>Conteúdo PrimeVue</p>
+      <p>PrimeVue Content</p>
       <Button label="Submit" icon="pi pi-check" />
     </Panel>
   </div>
@@ -85,14 +85,14 @@ const getTemplate = (ui, name) => {
 
     tailwind: `<template>
   <div class="p-4 bg-white shadow rounded-lg">
-    <h1 class="text-2xl font-semibold text-gray-800">Componente ${name}</h1>
-    <button class="btn btn-primary mt-4">Botão Estilizado</button>
+    <h1 class="text-2xl font-semibold text-gray-800">Component ${name}</h1>
+    <button class="btn btn-primary mt-4">Styled Button</button>
   </div>
 </template>`,
 
     default: `<template>
   <div>
-    <h1>Componente ${name}</h1>
+    <h1>Component ${name}</h1>
   </div>
 </template>`,
   };
@@ -101,7 +101,7 @@ const getTemplate = (ui, name) => {
 };
 
 program
-  .version("1.1.1")
+  .version("1.1.2")
   .argument("[name]", "Component name")
   .option("--js, --javascript", "Use javascript in the component")
   .option("--ts, --typescript", "Use typescript in the component")
@@ -112,7 +112,7 @@ program
 
     if (options.javascript && options.typescript) {
       console.error(
-        chalk.gray("\n❌ Erro: Escolha apenas uma linguagem (--js ou --ts).")
+        chalk.gray("\n❌ Error: Choose only one stack (--js ou --ts).")
       );
       process.exit(1);
     }
@@ -122,8 +122,6 @@ program
       : options.javascript
       ? "js"
       : undefined;
-
-    console.log(selectedLang)
 
     if (!name) {
       questions.push({
@@ -174,7 +172,7 @@ program
     const finalPath = options.path || promptAnswers.path;
 
     const framework = detectUIFramework();
-    console.log(chalk.cyan(`Detectado: ${framework === 'default' ? 'No framework detected' : framework}`))
+    console.log(chalk.cyan(`Detected: ${framework === 'default' ? 'No framework detected' : framework}`))
     const templateContent = getTemplate(framework, finalName)
 
     createComponent(
