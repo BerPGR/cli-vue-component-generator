@@ -1,6 +1,6 @@
 # Vue Component Generator
 
-## Version 1.2.0
+## Version 1.2.1
 
 ## Installation
 
@@ -31,8 +31,8 @@ Options:
 v-create MyComponent
 
 ? Component name: MyComponent
-? Path to create the component: src/components
 ? Select language: ts
+? Path to create the component: src/components
 ? Use script setup? Yes
 Detected: daisyui (An example)
 ✅ Component MyComponent.vue created successfully in: src/components/
@@ -46,3 +46,9 @@ Detected: daisyui (An example)
 - PrimeVUE
 - Quasar
 - Vuetify
+
+## Errors that might happen:
+- No package.json found in your current path
+- No vue dependency found in your package.json
+- Writing both --js/--javascript and --ts/--typescript. You must choose one.
+- The component you are creating already exists in the selected path.

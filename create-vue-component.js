@@ -7,7 +7,6 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 
 const createComponent = (name, lang, setup, userPath, content) => {
-  console.log(userPath, typeof userPath);
   const targetDir = path.join(process.cwd(), userPath);
 
   if (fs.existsSync(path.join(targetDir, `${name}.vue`))) {
@@ -39,7 +38,7 @@ const createComponent = (name, lang, setup, userPath, content) => {
     );
   } catch (error) {
     console.error(
-      chalk.red("❌ Error creating component:" + chalk.whiˀe.bold(error))
+      chalk.red("❌ Error creating component: " + chalk.grey(error))
     );
   }
 };
@@ -154,18 +153,36 @@ const getTemplate = (ui, name) => {
 };
 
 program
-  .version("1.2.0")
+  .version("1.2.1")
   .argument("[name]", "Component name")
   .option("--js, --javascript", "Use javascript in the component")
   .option("--ts, --typescript", "Use typescript in the component")
   .option("-s, --setup", "Use script setup")
   .option("-p, --path <path>", "Path to create the component")
   .action(async (name, options) => {
+
+    const pkgDir = path.join(process.cwd(), 'package.json')
+    if (!fs.existsSync(pkgDir)) {
+      console.error(
+        chalk.red("\n❌ Error: " + chalk.grey("There is no package.json in your current path."))
+      );
+      process.exit(1)
+    }
+
+    const pkg = JSON.parse(fs.readFileSync(pkgDir, 'utf-8'))
+    const deps = { ...pkg.dependencies, ...pkg.devDependencies }
+    if (!deps.hasOwnProperty('vue')) {
+      console.error(
+        chalk.red("\n❌ Error: " + chalk.grey("This is not a VueJS project."))
+      );
+      process.exit(1)
+    }
+
     const questions = [];
 
     if (options.javascript && options.typescript) {
       console.error(
-        chalk.gray("\n❌ Error: Choose only one stack (--js ou --ts).")
+        chalk.red("\n❌ Error: " + chalk.grey("Choose only one stack (--js ou --ts)."))
       );
       process.exit(1);
     }
