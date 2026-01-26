@@ -1,6 +1,6 @@
 # Vue Component Generator
 
-## Version 1.1.2
+## Version 1.2.0
 
 ## Installation
 
@@ -34,6 +34,15 @@ v-create MyComponent
 ? Path to create the component: src/components
 ? Select language: ts
 ? Use script setup? Yes
-Detected: daisyui
+Detected: daisyui (An example)
 ✅ Component MyComponent.vue created successfully in: src/components/
 ```
+
+### It creates a default template for the following UI frameworks
+- DaisyUI / TailwindCSS
+- Element Plus
+- NaiveUI
+- NuxtUI
+- PrimeVUE
+- Quasar
+- Vuetify
