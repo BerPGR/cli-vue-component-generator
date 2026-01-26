@@ -1,102 +1,189 @@
 #!/usr/bin/env node
 
-import fs from 'fs'
-import path from 'path'
-import { program } from 'commander'
-import inquirer from 'inquirer'
-import chalk from 'chalk'
+import fs from "fs";
+import path from "path";
+import { program } from "commander";
+import inquirer from "inquirer";
+import chalk from "chalk";
 
-const createComponent = (name, lang, setup, userPath) => {
-    const targetDir = path.join(process.cwd(), userPath)
+const createComponent = (name, lang, setup, userPath, content) => {
+    console.log(userPath, typeof userPath)
+  const targetDir = path.join(process.cwd(), userPath);
 
-    if (fs.existsSync(path.join(targetDir, `${name}.vue`))) {
-        console.log(chalk.red('❌ Component already exists at: ' + chalk.white.bold(userPath)));
-        return;
-    }
+  if (fs.existsSync(path.join(targetDir, `${name}.vue`))) {
+    console.log(
+      chalk.red("❌ Component already exists at: " + chalk.white.bold(userPath))
+    );
+    return;
+  }
 
-    if (!fs.existsSync(targetDir)) {
-        console.log(chalk.yellow('📂 Folder src/components not found. Creating...'));
-        fs.mkdirSync(targetDir, { recursive: true });
-    }
+  if (!fs.existsSync(targetDir)) {
+    console.log(
+      chalk.yellow("📂 Folder src/components not found. Creating...")
+    );
+    fs.mkdirSync(targetDir, { recursive: true });
+  }
 
-    const langAttr = lang === 'ts' ? ' lang="ts"' : ''
-    const setupAttr = setup ? ' setup' : ''
+  const langAttr = lang === "ts" ? ' lang="ts"' : "";
+  const setupAttr = setup ? " setup" : "";
 
-    const content = `<template>
-    <div>
-        <h1>Component ${name}</h1>
-    </div>
-</template>
+  const fullFileContent = `${content}
 
 <script${setupAttr}${langAttr}></script>
-`
-    try {
-        const filePath = path.join(targetDir, `${name}.vue`)
-        fs.writeFileSync(filePath, content)
-        console.log(`✅ Component ${name}.vue created successfully in: ${userPath}`);
-    } catch (error) {
-        console.error(chalk.red('❌ Error creating component:' + chalk.white.bold(error)));
-    }
-}
+`;
+  try {
+    const filePath = path.join(targetDir, `${name}.vue`);
+    fs.writeFileSync(filePath, fullFileContent);
+    console.log(
+      `✅ Component ${name}.vue created successfully in: ${userPath}`
+    );
+  } catch (error) {
+    console.error(
+      chalk.red("❌ Error creating component:" + chalk.white.bold(error))
+    );
+  }
+};
+
+const detectUIFramework = () => {
+  const pkgPath = path.join(process.cwd(), "package.json");
+  if (!fs.existsSync(pkgPath)) {
+    return "default";
+  }
+
+  const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
+  const allDeps = { ...pkg.dependencies, ...pkg.devDependencies };
+
+  if (allDeps["@nuxt/ui"]) return "nuxtui";
+  if (allDeps["primevue"]) return "primevue";
+  if (allDeps["vuetify"]) return "vuetify";
+  if (allDeps["daisyui"]) return "daisyui";
+  return 'default'
+};
+
+const getTemplate = (ui, name) => {
+  const templates = {
+    nuxtui: `<template>
+  <UContainer>
+    <UCard>
+      <template #header>
+        <h1 class="text-xl font-bold">Componente ${name}</h1>
+      </template>
+      <p>Conteúdo do NuxtUI</p>
+      <UButton label="Clique aqui" />
+    </UCard>
+  </UContainer>
+</template>`,
+
+    primevue: `<template>
+  <div class="card">
+    <Panel header="${name}">
+      <p>Conteúdo PrimeVue</p>
+      <Button label="Submit" icon="pi pi-check" />
+    </Panel>
+  </div>
+</template>`,
+
+    tailwind: `<template>
+  <div class="p-4 bg-white shadow rounded-lg">
+    <h1 class="text-2xl font-semibold text-gray-800">Componente ${name}</h1>
+    <button class="btn btn-primary mt-4">Botão Estilizado</button>
+  </div>
+</template>`,
+
+    default: `<template>
+  <div>
+    <h1>Componente ${name}</h1>
+  </div>
+</template>`,
+  };
+
+  return templates[ui] || templates.default;
+};
 
 program
-    .version('1.0.0')
-    .argument('[name]', 'Component name')
-    .option('-l, --lang <type>', 'Component language (js or ts)')
-    .option('-s, --setup', 'Use script setup')
-    .option('-p, --path <path>', 'Path to create the component')
-    .action(async (name, options) => {
-        let answers = {
-            name: name,
-            lang: options.lang,
-            setup: options.setup,
-            userPath: options.path
-        }
+  .version("1.1.1")
+  .argument("[name]", "Component name")
+  .option("--js, --javascript", "Use javascript in the component")
+  .option("--ts, --typescript", "Use typescript in the component")
+  .option("-s, --setup", "Use script setup")
+  .option("-p, --path <path>", "Path to create the component")
+  .action(async (name, options) => {
+    const questions = [];
 
-        const questions = []
+    if (options.javascript && options.typescript) {
+      console.error(
+        chalk.gray("\n❌ Erro: Escolha apenas uma linguagem (--js ou --ts).")
+      );
+      process.exit(1);
+    }
 
-        if (!name) {
-            questions.push({
-                type: 'input',
-                name: 'name',
-                message: 'Component name:',
-                validate: (value) => value ? true : 'The name cannot be empty.'
-            })
-        }
+    const selectedLang = options.typescript
+      ? "ts"
+      : options.javascript
+      ? "js"
+      : undefined;
 
-        if (!options.path) {
-            questions.push({
-                type: 'input',
-                name: 'userPath',
-                message: 'Path to create the component:',
-                default: 'src/components'
-            })
-        }
+    console.log(selectedLang)
 
-        if (!options.lang) {
-            questions.push({
-                type: 'list',
-                name: 'lang',
-                message: 'Select language:',
-                choices: ['js', 'ts'],
-            })
-        }
+    if (!name) {
+      questions.push({
+        type: "input",
+        name: "name",
+        message: "Component name:",
+        validate: (value) => (value ? true : "The name cannot be empty."),
+      });
+    }
 
-        if (options.setup === undefined && !process.argv.includes('-s')) {
-            questions.push({
-                type: 'confirm',
-                name: 'setup',
-                message: 'Use script setup?',
-                default: true
-            })
-        }
+    if (!selectedLang) {
+      questions.push({
+        type: "list",
+        name: "lang",
+        message: "Select language:",
+        choices: [
+          { name: "JavaScript", value: "js" },
+          { name: "TypeScript", value: "ts" },
+        ],
+        default: "js",
+      });
+    }
 
-        if (questions.length > 0) {
-            const promptAnswers = await inquirer.prompt(questions);
-            answers = { ...answers, ...promptAnswers };
-        }
+    if (!options.path) {
+      questions.push({
+        type: "input",
+        name: "path",
+        message: "Path to create the component:",
+        default: "src/components",
+      });
+    }
 
-        createComponent(answers.name, answers.lang, answers.setup, answers.userPath)
-    })
+    if (options.setup === undefined && !process.argv.includes("-s")) {
+      questions.push({
+        type: "confirm",
+        name: "setup",
+        message: "Use script setup?",
+        default: true,
+      });
+    }
 
-program.parse(process.argv)
+    const promptAnswers = await inquirer.prompt(questions);
+
+    const finalName = name || promptAnswers.name;
+    const finalLang = selectedLang || promptAnswers.lang;
+    const finalSetup =
+      options.setup !== undefined ? options.setup : promptAnswers.setup;
+    const finalPath = options.path || promptAnswers.path;
+
+    const framework = detectUIFramework();
+    console.log(chalk.cyan(`Detectado: ${framework === 'default' ? 'No framework detected' : framework}`))
+    const templateContent = getTemplate(framework, finalName)
+
+    createComponent(
+      finalName,
+      finalLang,
+      finalSetup,
+      finalPath,
+      templateContent
+    );
+  });
+
+program.parse(process.argv);
