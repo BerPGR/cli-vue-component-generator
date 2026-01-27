@@ -77,6 +77,25 @@ const getTemplate = (ui, name) => {
   </UContainer>
 </template>`,
 
+vuetify: `<template>
+  <v-card class="mx-auto my-4" max-width="400" elevation="2">
+    <v-card-item>
+      <v-card-title>Component ${name}</v-card-title>
+      <v-card-subtitle>Component Subtitle</v-card-subtitle>
+    </v-card-item>
+
+    <v-card-text>
+      Styled content for Vuetify framework.
+    </v-card-text>
+
+    <v-card-actions>
+      <v-btn color="primary" variant="text">
+        Explore
+      </v-btn>
+    </v-card-actions>
+  </v-card>
+</template>`,
+
     primevue: `<template>
   <div class="card">
     <Panel header="${name}">
@@ -153,7 +172,7 @@ const getTemplate = (ui, name) => {
 };
 
 program
-  .version("1.2.1")
+  .version("1.3.1")
   .argument("[name]", "Component name")
   .option("--js, --javascript", "Use javascript in the component")
   .option("--ts, --typescript", "Use typescript in the component")
