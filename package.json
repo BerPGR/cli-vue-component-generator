@@ -1,6 +1,6 @@
 {
-  "name": "vue-gen-component",
-  "version": "2.0.0",
+  "name": "vue-gen",
+  "version": "2.0.1",
   "description": "CLI command to create VueJS components",
   "type": "module",
   "bin": {

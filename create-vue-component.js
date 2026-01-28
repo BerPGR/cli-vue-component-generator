@@ -172,7 +172,7 @@ vuetify: `<template>
 };
 
 program
-  .version("2.0.0")
+  .version("2.0.1")
   .argument("[name]", "Component name")
   .option("--js, --javascript", "Use javascript in the component")
   .option("--ts, --typescript", "Use typescript in the component")
