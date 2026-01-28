@@ -25,11 +25,27 @@ const createComponent = (name, lang, setup, userPath, content) => {
 
   const langAttr = lang === "ts" ? ' lang="ts"' : "";
   const setupAttr = setup ? " setup" : "";
+  let scriptContents = [
+    'export default {',
+    `  name: '${name}'`,
+    '};'
+  '.join('\n');
+  if (setup) {
+    scriptContents = [
+      'defineOptions({',
+      `  name: '${name}'`,
+      '});'
+    ].join('\n');
+  }
 
-  const fullFileContent = `${content}
+  const fullFileContent = [
+    content,
+    '',
+    `<script${setupAttr}${langAttr}>`,
+    scriptContents,
+    '</script>'
+  ].join('\n') + '\n';
 
-<script${setupAttr}${langAttr}></script>
-`;
   try {
     const filePath = path.join(targetDir, `${name}.vue`);
     fs.writeFileSync(filePath, fullFileContent);
