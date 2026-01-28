@@ -29,7 +29,7 @@ const createComponent = (name, lang, setup, userPath, content) => {
     'export default {',
     `  name: '${name}'`,
     '};'
-  '.join('\n');
+  ].join('\n');
   if (setup) {
     scriptContents = [
       'defineOptions({',
