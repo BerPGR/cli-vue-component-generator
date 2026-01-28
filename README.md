@@ -1,54 +1,88 @@
-# Vue Component Generator
+# Vue Gen
 
-## Version 1.3.1
+A smart CLI to scaffold Vue.js components with automatic UI Framework detection.
 
-## Installation
+[![npm version](https://img.shields.io/npm/v/vue-gen.svg)](https://www.npmjs.com/package/vue-gen)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Open Source](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-brightgreen)](https://github.com/BerPGR/cli-vue-component-generator)
 
-- Run `npm install -g vue-gen-component`
+## Why use Vue Gen?
 
-- In your main VueJS project folder, run `v-create <name> [options]`
+Creating components manually involves repetitive boilerplate. **Vue Gen** automates this by detecting your project's ecosystem and providing the right template immediately.
 
-```
-OPTIONS:
-Usage: v-create [options] [name]
+- **Zero Config:** Automatically detects if you are using Tailwind, PrimeVue, Vuetify, and more.
+- **Modern Standards:** Full support for `<script setup>` and TypeScript.
+- **Smart Pathing:** Automatically creates directories if they don't exist.
+- **No Junk:** Clean, lightweight, and focused.
 
-Arguments:
-  name                Component name
+---
 
-Options:
-  -V, --version       output the version number
-  --js, --javascript  Use javascript in the component
-  --ts, --typescript  Use typescript in the component
-  -s, --setup         Use script setup
-  -p, --path <path>   Path to create the component
-  -h, --help          display help for command
+## Installation & Usage
 
-```
-
-## Usage
+You don't need to install it globally. Use **npx** to keep your system clean:
 
 ```bash
-v-create MyComponent
-
-? Component name: MyComponent
-? Select language: ts
-? Path to create the component: src/components
-? Use script setup? Yes
-Detected: daisyui (An example)
-✅ Component MyComponent.vue created successfully in: src/components/
+npx vue-gen
 ```
 
-### It creates a default template for the following UI frameworks
-- DaisyUI / TailwindCSS
-- Element Plus
-- NaiveUI
-- NuxtUI
-- PrimeVUE
-- Quasar
-- Vuetify
+Alternatively, for global access:
 
-## Errors that might happen:
-- No package.json found in your current path
-- No vue dependency found in your package.json
-- Writing both --js/--javascript and --ts/--typescript. You must choose one.
-- The component you are creating already exists in the selected path.
+```bash
+npm install -g vue-gen
+# then run
+vue-gen [name]
+```
+
+## Supported UI Frameworks
+
+The CLI scans your package.json to detect your UI library and provides tailored templates:
+
+| Framework / UI Library | Components |
+|-----------------------|--------------------|
+| **Shadcn UI (radix-vue)** | Card, Button, Footer |
+| **Nuxt UI (@nuxt/ui)** | UContainer, UCard, UButton |
+| **PrimeVue** | Panel, Button |
+| **Vuetify** | v-card, v-btn |
+| **Tailwind / DaisyUI** | Utility classes / DaisyUI components |
+| **Element Plus** | el-card, el-button |
+| **Quasar** | q-card, q-btn |
+| **Naive UI** | n-card, n-button |
+
+## Command Options
+
+```bash
+Usage: vue-gen [options] [name]
+
+Arguments:
+  name                Component name (optional, prompt will trigger if empty)
+
+Options:
+  -V, --version       Output the version number
+  --js, --javascript  Use JavaScript
+  --ts, --typescript  Use TypeScript
+  -s, --setup         Use <script setup> (default: true)
+  -p, --path <path>   Custom path (default: src/components)
+  -h, --help          Display help
+```
+
+### Example
+Running `npx vue-gen MyCard --ts -s` in a Tailwind/DaisyUI project will generate:
+
+```javascript
+<template>
+  <div class="p-4 bg-white shadow rounded-lg">
+    <h1 class="text-2xl font-semibold text-gray-800">Component MyCard</h1>
+    <button class="btn btn-primary mt-4">Styled Button</button>
+  </div>
+</template>
+
+<script setup lang="ts"></script>
+```
+
+### Image
+**Tailwind** | ![Tailwind Template](https://github.com/BerPGR/cli-vue-component-generator/blob/master/image.png)
+
+
+## Requirements
+- VueJS Project: The CLI checks for the vue dependency.
+- package.json: Must be run from the root of your project.
