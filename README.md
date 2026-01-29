@@ -22,15 +22,18 @@ Creating components manually involves repetitive boilerplate. **Vue Gen** automa
 You don't need to install it globally. Use **npx** to keep your system clean:
 
 ```bash
-npx vue-gen
+npx @polac0/vue-gen
 ```
 
 Alternatively, for global access:
 
 ```bash
-npm install -g vue-gen
+npm install -g @polac0/vue-gen
+
 # then run
 vue-gen [name]
+#or
+v-create [name]
 ```
 
 ## Supported UI Frameworks
@@ -66,7 +69,7 @@ Options:
 ```
 
 ### Example
-Running `npx vue-gen MyCard --ts -s` in a Tailwind/DaisyUI project will generate:
+Running `vue-gen MyCard --ts -s` in a Tailwind/DaisyUI project will generate:
 
 ```javascript
 <template>
