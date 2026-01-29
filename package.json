@@ -25,6 +25,7 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "commander": "^14.0.2",
-    "inquirer": "^8.2.7"
+    "inquirer": "^8.2.7",
+    "vue": "^3.5.27"
   }
 }
