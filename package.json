@@ -1,6 +1,6 @@
 {
-  "name": "vue-gen",
-  "version": "2.0.1",
+  "name": "@polac0/vue-gen",
+  "version": "2.0.3",
   "description": "CLI command to create VueJS components",
   "type": "module",
   "bin": {
@@ -25,7 +25,6 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "commander": "^14.0.2",
-    "inquirer": "^8.2.7",
-    "vue": "^3.5.27"
+    "inquirer": "^8.2.7"
   }
 }
