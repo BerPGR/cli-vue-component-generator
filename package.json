@@ -1,6 +1,6 @@
 {
   "name": "@polac0/vue-gen",
-  "version": "2.0.4",
+  "version": "2.0.10",
   "description": "CLI command to create VueJS components",
   "type": "module",
   "bin": {
