@@ -32,8 +32,6 @@ npm install -g @polac0/vue-gen
 
 # then run
 vue-gen [name]
-#or
-v-create [name]
 ```
 
 ## Supported UI Frameworks
