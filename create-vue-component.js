@@ -5,7 +5,7 @@ import path from "path";
 import { program } from "commander";
 import inquirer from "inquirer";
 import chalk from "chalk";
-import templates from './ui-templates.js'
+import templates from './ui-templates'
 
 const createComponent = (name, lang, setup, userPath, content) => {
   const targetDir = path.join(process.cwd(), userPath);
