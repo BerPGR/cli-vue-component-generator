@@ -81,7 +81,7 @@ const detectUIFramework = () => {
 };
 
 program
-  .version("2.0.11")
+  .version("2.1.0")
   .argument("[name]", "Component name")
   .option("--js, --javascript", "Use javascript in the component")
   .option("--ts, --typescript", "Use typescript in the component")
@@ -182,12 +182,13 @@ program
     }
 
     const promptAnswers = await inquirer.prompt(questions);
+    
     const finalName = name || promptAnswers.name;
     const finalLang = selectedLang || promptAnswers.lang;
     const finalSetup =
       options.setup !== undefined ? options.setup : promptAnswers.setup;
     const finalPath = options.path || promptAnswers.path;
-    const template = templateOptions(promptAnswers.componentType);
+    const template = templateOptions[promptAnswers.componentType];
 
     createComponent(
       finalName,

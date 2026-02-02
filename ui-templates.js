@@ -23,16 +23,16 @@ const templates = {
   nuxtui: {
     ucontainer: `<template>
   <UContainer>
-    <div class="py-4">Conteúdo em Container: {{name}}</div>
+    <div class="py-4">UContainer {{name}}</div>
   </UContainer>
 </template>`,
     ucard: `<template>
-<UCard>
-<template #header>
-<h3 class="text-base font-semibold leading-6 text-gray-900">{{name}}</h3>
-</template>
-Conteúdo do Card
-</UCard>
+  <UCard>
+    <template #header>
+      <h3 class="text-base font-semibold leading-6 text-gray-900">{{name}}</h3>
+    </template>
+    Card Content
+  </UCard>
 </template>`,
     ubutton: `<template>
 <UButton color="primary" variant="solid">{{name}}</UButton>
@@ -42,7 +42,7 @@ Conteúdo do Card
   primevue: {
     panel: `<template>
 <Panel header="{{name}}">
-<p class="m-0">Conteúdo do Painel PrimeVue</p>
+<p class="m-0">PrimeVue Panel Content</p>
 </Panel>
 </template>`,
     button: `<template>
@@ -52,7 +52,7 @@ Conteúdo do Card
 
   vuetify: {
     'v-card': `<template>
-<v-card title="{{name}}" subtitle="Gerado via CLI" text="Conteúdo do Vuetify"></v-card>
+<v-card title="{{name}}" subtitle="Generated with CLI" text="Conteúdo do Vuetify"></v-card>
 </template>`,
     'v-btn': `<template>
 <v-btn color="primary" elevation="2">{{name}}</v-btn>
@@ -70,7 +70,7 @@ Conteúdo do Card
 <div class="card-body">
 <h2 class="card-title">{{name}}</h2>
 <div class="card-actions justify-end">
-<button class="btn btn-primary">Ação</button>
+<button class="btn btn-primary">Action</button>
 </div>
 </div>
 </div>
@@ -83,7 +83,7 @@ Conteúdo do Card
 <template #header>
 <div class="card-header"><span>{{name}}</span></div>
 </template>
-Conteúdo Element Plus
+Element Plus
 </el-card>
 </template>`,
     'el-button': `<template>
@@ -107,7 +107,7 @@ Conteúdo Element Plus
   naiveui: {
     'n-card': `<template>
 <n-card title="{{name}}" :bordered="true">
-Conteúdo Naive UI
+Naive UI Content
 </n-card>
 </template>`,
     'n-button': `<template>
