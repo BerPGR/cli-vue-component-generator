@@ -81,7 +81,7 @@ const detectUIFramework = () => {
 };
 
 program
-  .version("2.0.10")
+  .version("2.0.11")
   .argument("[name]", "Component name")
   .option("--js, --javascript", "Use javascript in the component")
   .option("--ts, --typescript", "Use typescript in the component")
@@ -187,7 +187,7 @@ program
     const finalSetup =
       options.setup !== undefined ? options.setup : promptAnswers.setup;
     const finalPath = options.path || promptAnswers.path;
-    const template = availableComponents(promptAnswers.componentType);
+    const template = templateOptions(promptAnswers.componentType);
 
     createComponent(
       finalName,
